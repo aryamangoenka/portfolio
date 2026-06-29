@@ -13,7 +13,7 @@ import {
 import { PROFILE, LINKS, NOW, BADGES } from "@/lib/content"
 
 function BadgeIcon({ icon }: { icon: string }) {
-  const p = { size: 17, className: "pi" }
+  const p = { size: 16, className: "pi" }
   switch (icon) {
     case "trophy": return <Trophy {...p} />
     case "bot": return <Bot {...p} />
@@ -27,33 +27,25 @@ function BadgeIcon({ icon }: { icon: string }) {
 
 export default function Hero() {
   return (
-    <div className="hero fade">
+    <div className="hero">
       <div className="eyebrow">
-        <span className="dot" /> Founders, Inc · F26 · San Francisco
+        <span className="dot" /> founders, inc · f26 · san francisco
       </div>
 
-      <h1>
+      <h1 className="hero-h1">
         I build agents
         <br />
-        that <em>ship</em>.
+        that <span className="accent">ship</span>.
       </h1>
 
-      <p className="lede">
-        I&apos;m {PROFILE.name.split(" ")[0]} — a {PROFILE.age}-year-old founder building{" "}
+      <p className="hero-lede">
+        I&apos;m 20, building{" "}
         <a href={LINKS.assemblr} target="_blank" rel="noreferrer">
           Assemblr
         </a>{" "}
-        at Founders, Inc. I ship agentic AI pipelines, on-device ML, and full-stack
-        systems that hold up under real users — not just demos. Previously: agentic
-        NLP at ASAPP, neural-net education for 500+ students, and AI research headed
-        to NUTRITION 2026.
+        at Founders, Inc. Before this: agentic NLP at ASAPP, a neural-net tool
+        500+ students learned on, and LLM research headed to NUTRITION 2026.
       </p>
-
-      <div className="meta">
-        <span>{PROFILE.location}</span>
-        <span>{PROFILE.school}</span>
-        <span>{PROFILE.role}</span>
-      </div>
 
       <div className="proof">
         {BADGES.map((b) => (
@@ -68,29 +60,19 @@ export default function Hero() {
       <div className="now">
         <div className="grow">
           <span className="tag">
-            <span className="dot" /> {NOW.label} now
+            <span className="dot" /> building now
           </span>
-          <h3>{NOW.what}</h3>
-          <p>{NOW.detail}</p>
-          <p className="ctx">{NOW.context}</p>
+          <div className="now-what">{NOW.what}</div>
+          <p className="now-detail">{NOW.detail}</p>
+          <p className="now-ctx">{NOW.context}</p>
         </div>
         <a className="btn" href={NOW.url} target="_blank" rel="noreferrer">
-          Visit assemblr.net <ArrowUpRight size={14} />
+          assemblr.net <ArrowUpRight size={14} />
         </a>
       </div>
 
       <div className="logos">
-        <b>Founders, Inc.</b>
-        <span className="sep">✦</span>
-        <b>ASAPP</b>
-        <span className="sep">✦</span>
-        <b>MIT Break Through Tech AI</b>
-        <span className="sep">✦</span>
-        <b>UMass Amherst</b>
-        <span className="sep">✦</span>
-        <b>SIG</b>
-        <span className="sep">✦</span>
-        <b>HF0</b>
+        founders, inc · asapp · mit · sig · umass · hf0
       </div>
     </div>
   )

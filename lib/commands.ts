@@ -26,17 +26,17 @@ export const COMMANDS = [
 
 function help(): TermResult {
   return ok([
-    P("Available commands — or just click a file in the sidebar.", "term-muted"),
+    P("commands, or just click a file in the sidebar.", "term-muted"),
     P(""),
     P("  ls [dir]        list files          cat <file>     print a file"),
     P("  cd <dir>        change directory    open <file>    jump to a section"),
-    P("  projects        list my work        experience     career history"),
-    P("  stack           the tech I use      awards         honors"),
-    P("  whoami          the short version   contact        how to reach me"),
+    P("  projects        my work             experience     where I've been"),
+    P("  stack           what I use          awards         receipts"),
+    P("  whoami          the short version   contact        reach me"),
     P("  neofetch        the stat card       git log        career as commits"),
-    P("  theme           toggle light/dark   clear          clear the screen"),
+    P("  clear           clear the screen"),
     P(""),
-    P("  pro tip: ↑/↓ for history · Tab to autocomplete · try 'sudo hire-me'", "term-muted"),
+    P("  ↑/↓ history · tab to autocomplete · try 'sudo hire-me'", "term-muted"),
   ])
 }
 
@@ -79,7 +79,7 @@ function whoami(): TermResult {
   return ok([
     P(PROFILE.name, "term-accent"),
     P(`${PROFILE.role} · ${PROFILE.location} · ${PROFILE.school}`),
-    P(PROFILE.tagline, "term-muted"),
+    P(PROFILE.blurb, "term-muted"),
   ])
 }
 
@@ -115,7 +115,7 @@ function awards(): TermResult {
 
 function contact(): TermResult {
   return ok([
-    P("Let's talk — I read every email.", "term-muted"),
+    P("let's talk. I read every email.", "term-muted"),
     P(`  email     ${PROFILE.email}`, "term-link"),
     P(`  github    ${LINKS.github.replace("https://", "")}`, "term-link"),
     P(`  linkedin  ${LINKS.linkedin.replace("https://www.", "")}`, "term-link"),
@@ -184,7 +184,7 @@ function sudo(rest: string): TermResult {
   if (r.startsWith("rm")) {
     return ok([P("nice try. this one's staying up. 🙂", "term-muted")])
   }
-  return ok([P(`[sudo] password for ${PROFILE.handle}: `, "term-muted"), P("just kidding — try 'sudo hire-me'", "term-muted")])
+  return ok([P(`[sudo] password for ${PROFILE.handle}: `, "term-muted"), P("just kidding. try 'sudo hire-me'", "term-muted")])
 }
 
 export function run(input: string, cwd: string): TermResult {
@@ -209,18 +209,14 @@ export function run(input: string, cwd: string): TermResult {
     case "contact": case "email": case "reach": return contact()
     case "socials": case "links": return contact()
     case "neofetch": case "fetch": return neofetch()
-    case "git": return args[0] === "log" ? gitLog() : ok([P(`git: '${args.join(" ")}' — try 'git log'`, "term-muted")])
-    case "theme": {
-      const t = args[0]
-      if (t === "dark" || t === "light") return ok([P(`theme → ${t}`, "term-success")], { setTheme: t })
-      return ok([P("theme → toggled", "term-success")], { setTheme: "toggle" })
-    }
+    case "git": return args[0] === "log" ? gitLog() : ok([P(`git: '${args.join(" ")}', try 'git log'`, "term-muted")])
+    case "theme": return ok([P("dark only. it's nicer this way.", "term-muted")])
     case "date": return ok([P(new Date().toString())])
     case "echo": return ok([P(rest)])
     case "clear": case "cls": return ok([], { clear: true })
     case "sudo": return sudo(rest)
     case "repo": case "source": return ok([P("source lives on GitHub:", "term-muted"), P(`  ${LINKS.github}`, "term-link")])
-    case "vim": case "nano": case "emacs": return ok([P(`${cmd}? bold choice. press nothing — you're already in the editor. 🙂`, "term-muted")])
+    case "vim": case "nano": case "emacs": return ok([P(`${cmd}? you're already in the editor. 🙂`, "term-muted")])
     case "exit": case "quit": case "logout": return ok([P("there's no exit. there's only the next build. 🙂", "term-muted")])
     case "ll-": default:
       return ok([

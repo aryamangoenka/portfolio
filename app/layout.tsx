@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Instrument_Serif, JetBrains_Mono } from "next/font/google"
+import { JetBrains_Mono } from "next/font/google"
 import "./globals.css"
 
 const mono = JetBrains_Mono({
@@ -8,17 +8,9 @@ const mono = JetBrains_Mono({
   display: "swap",
 })
 
-const serif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-serif",
-  display: "swap",
-})
-
-const title = "Aryaman Goenka — Founder, Agentic AI"
+const title = "Aryaman Goenka, Founder · Agentic AI"
 const description =
-  "20-year-old founder building agentic AI. 1st of 1,000+ at HF0, agentic NLP at ASAPP (10K+ convos @ 95–100%), MIT Break Through Tech AI Fellow, published research. Building Assemblr at Founders, Inc."
+  "20-year-old founder building agentic AI. 1st of 1,000+ at HF0, agentic NLP at ASAPP (10K conversations at 95-100%), MIT Break Through Tech AI Fellow, published research. Building Assemblr at Founders, Inc."
 
 export const metadata: Metadata = {
   title,
@@ -50,7 +42,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="light" className={`${mono.variable} ${serif.variable}`}>
+    <html lang="en" className={mono.variable}>
       <body>{children}</body>
     </html>
   )

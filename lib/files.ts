@@ -1,211 +1,104 @@
 // ─────────────────────────────────────────────────────────────────────────
 //  files.ts — the virtual filesystem.
-//  The sidebar tree, the editor panes, and the terminal (ls/cd/cat/open) all
+//  The sidebar tree, the editor views, and the terminal (ls/cd/cat/open) all
 //  read from FILES, so everything stays in sync from one definition.
 // ─────────────────────────────────────────────────────────────────────────
 
-import { PROFILE, LINKS, EXPERIENCE, STACK, AWARDS, CREDO, PROJECTS } from "./content"
+import { PROFILE, LINKS, EXPERIENCE, STACK, AWARDS, CREDO, ABOUT_BIO, PROJECTS } from "./content"
 
-export type FileKind = "hero" | "code" | "markdown"
+export type FileView =
+  | "readme"
+  | "project"
+  | "experience"
+  | "stack"
+  | "awards"
+  | "about"
+  | "contact"
 
 export type FileNode = {
   id: string // full path, e.g. "projects/coldbrew.md"
-  name: string // display name, e.g. "coldbrew.md"
-  dir: string | null // "projects" or null for root
-  lang: string // ts | json | bash | md
-  kind: FileKind
-  icon: string // lucide-ish hint for the sidebar
-  code?: string // for kind === "code"
-  md?: string // for kind === "markdown"
-  text: string // plaintext for `cat` in the terminal
+  name: string
+  dir: string | null
+  lang: string
+  view: FileView
+  icon: string
+  slug?: string // for projects
+  text: string // plaintext for `cat`
 }
 
-const q = (s: string) => JSON.stringify(s)
+// ─── plaintext for the terminal `cat` ────────────────────────────────────────
 
-// ─── code generators (data → source view) ───────────────────────────────────
+const readmeText = () =>
+  [
+    PROFILE.name,
+    `${PROFILE.role} · ${PROFILE.location}`,
+    "",
+    PROFILE.blurb,
+    "",
+    "1st / 1,000+   HF0 AI hackathon, won in 12h",
+    "10K @ 95-100%  agentic NLP at ASAPP",
+    "MIT fellow     Break Through Tech AI",
+    "published      LLM research, NUTRITION 2026",
+    "500+ taught    NeuroBlock",
+    "president      CICSoft, biggest tech org at UMass",
+    "",
+    "now: building Assemblr at Founders, Inc. (SF).",
+    "tip: type 'help', or 'open projects/coldbrew.md'.",
+  ].join("\n")
 
-function aboutCode(): string {
-  return `// who I am, in fewer words than the recruiters want.
+const experienceText = () =>
+  EXPERIENCE.map((e) => `${e.period}  ${e.role}, ${e.org}\n${e.notes.map((n) => "  - " + n).join("\n")}`).join("\n\n")
 
-const aryaman = {
-  name: ${q(PROFILE.name)},
-  age: ${PROFILE.age},
-  role: ${q(PROFILE.role)},
-  location: ${q(PROFILE.location)},
-  school: ${q(PROFILE.school)},
+const stackText = () =>
+  STACK.map((g) => `${g.label.padEnd(10)} ${g.items.join(", ")}`).join("\n")
 
-  thesis: ${q(PROFILE.tagline)},
+const awardsText = () =>
+  AWARDS.map((a) => `${a.year}  ${a.award}${a.detail ? "  (" + a.detail + ")" : ""}`).join("\n")
 
-  // I care less about how impressive something sounds, and more about
-  // whether it actually works for the person on the other end.
-  credo: [
-${CREDO.map((c) => `    ${q(c)},`).join("\n")}
-  ],
+const aboutText = () => [...CREDO.map((c) => "- " + c), "", ABOUT_BIO].join("\n")
 
-  // the worst thing you can do is not show up. so I keep showing up.
-  status: "building",
-}
-
-export default aryaman
-`
-}
-
-function experienceCode(): string {
-  const entries = EXPERIENCE.map((e) => {
-    const notes = e.notes.map((n) => `      ${q(n)},`).join("\n")
-    const tags = e.tags.map(q).join(", ")
-    return `  {
-    org: ${q(e.org)},
-    role: ${q(e.role)},
-    period: ${q(e.period)},${e.location ? `\n    location: ${q(e.location)},` : ""}
-    notes: [
-${notes}
-    ],
-    tags: [${tags}],
-  },`
-  }).join("\n")
-  return `// where I've been. reverse-chronological, lightly compressed.
-
-export const experience = [
-${entries}
-]
-`
-}
-
-function stackCode(): string {
-  const groups = STACK.map(
-    (g) => `  ${g.label}: [${g.items.map(q).join(", ")}],`
-  ).join("\n")
-  return `// the tools. I reach for whatever ships the thing fastest.
-
-export const stack = {
-${groups}
-}
-`
-}
-
-function awardsJson(): string {
-  return JSON.stringify(AWARDS, null, 2) + "\n"
-}
-
-function contactScript(): string {
-  return `#!/bin/bash
-# ways to reach me — I read every email.
-
-echo "email     → ${PROFILE.email}"
-echo "github    → ${LINKS.github.replace("https://", "")}"
-echo "linkedin  → ${LINKS.linkedin.replace("https://www.", "")}"
-echo "x         → ${LINKS.x.replace("https://", "")}"
-echo "assemblr  → ${LINKS.assemblr.replace("https://", "")}"
-
-# fastest reply to short, specific notes:
-#   an intro to a builder, a sharp critique, or a problem you're stuck on.
-`
-}
-
-// plaintext README for \`cat README.md\` in the terminal
-function readmeText(): string {
-  return `# ${PROFILE.name}
-${PROFILE.role} — ${PROFILE.location}
-
-${PROFILE.tagline}
-${PROFILE.blurb}
-
-PROOF
-  • 1st / 1,000+   HF0 Voice & Video AI Hackathon (won in 12h)
-  • 10K+ @ 95-100% Agentic NLP at ASAPP, shown to ML leadership
-  • MIT Fellow     Break Through Tech AI
-  • Published      LLM-reliability research, NUTRITION 2026
-  • 500+ taught    NeuroBlock — neural nets for high schoolers
-  • President      CICSoft, largest tech org at UMass
-
-NOW
-  Building Assemblr at Founders, Inc. (Canopy F26), San Francisco.
-
-tip: type 'help' to explore. or 'open projects/coldbrew.md'.
-`
-}
+const contactText = () =>
+  [
+    PROFILE.email,
+    LINKS.github.replace("https://", ""),
+    LINKS.linkedin.replace("https://www.", ""),
+    LINKS.x.replace("https://", ""),
+    LINKS.assemblr.replace("https://", ""),
+  ].join("\n")
 
 // ─── the filesystem ──────────────────────────────────────────────────────────
 
-const rootFiles: FileNode[] = [
-  {
-    id: "README.md",
-    name: "README.md",
-    dir: null,
-    lang: "md",
-    kind: "hero",
-    icon: "readme",
-    text: readmeText(),
-  },
-]
+const readmeFile: FileNode = {
+  id: "README.md",
+  name: "README.md",
+  dir: null,
+  lang: "md",
+  view: "readme",
+  icon: "readme",
+  text: readmeText(),
+}
 
 const projectFiles: FileNode[] = PROJECTS.map((p) => ({
   id: `projects/${p.slug}.md`,
   name: `${p.slug}.md`,
   dir: "projects",
   lang: "md",
-  kind: "markdown" as FileKind,
+  view: "project" as FileView,
   icon: "md",
-  md: p.body,
+  slug: p.slug,
   text: p.body,
 }))
 
 const afterFiles: FileNode[] = [
-  {
-    id: "experience.ts",
-    name: "experience.ts",
-    dir: null,
-    lang: "ts",
-    kind: "code",
-    icon: "ts",
-    code: experienceCode(),
-    text: experienceCode(),
-  },
-  {
-    id: "stack.ts",
-    name: "stack.ts",
-    dir: null,
-    lang: "ts",
-    kind: "code",
-    icon: "ts",
-    code: stackCode(),
-    text: stackCode(),
-  },
-  {
-    id: "awards.json",
-    name: "awards.json",
-    dir: null,
-    lang: "json",
-    kind: "code",
-    icon: "json",
-    code: awardsJson(),
-    text: awardsJson(),
-  },
-  {
-    id: "about.ts",
-    name: "about.ts",
-    dir: null,
-    lang: "ts",
-    kind: "code",
-    icon: "ts",
-    code: aboutCode(),
-    text: aboutCode(),
-  },
-  {
-    id: "contact.sh",
-    name: "contact.sh",
-    dir: null,
-    lang: "bash",
-    kind: "code",
-    icon: "sh",
-    code: contactScript(),
-    text: contactScript(),
-  },
+  { id: "experience.ts", name: "experience.ts", dir: null, lang: "ts", view: "experience", icon: "ts", text: experienceText() },
+  { id: "stack.ts", name: "stack.ts", dir: null, lang: "ts", view: "stack", icon: "ts", text: stackText() },
+  { id: "awards.json", name: "awards.json", dir: null, lang: "json", view: "awards", icon: "json", text: awardsText() },
+  { id: "about.ts", name: "about.ts", dir: null, lang: "ts", view: "about", icon: "ts", text: aboutText() },
+  { id: "contact.sh", name: "contact.sh", dir: null, lang: "bash", view: "contact", icon: "sh", text: contactText() },
 ]
 
 // Scroll / narrative order: hook → work → record → skills → honors → self → reach
-export const FILES: FileNode[] = [...rootFiles, ...projectFiles, ...afterFiles]
+export const FILES: FileNode[] = [readmeFile, ...projectFiles, ...afterFiles]
 
 export const getFile = (id: string) => FILES.find((f) => f.id === id)
 
@@ -215,14 +108,13 @@ export type TreeFolder = { type: "folder"; name: string; path: string; children:
 export type TreeItem = { type: "file"; node: FileNode } | TreeFolder
 
 export const TREE: TreeItem[] = [
-  { type: "file", node: rootFiles[0] },
+  { type: "file", node: readmeFile },
   { type: "folder", name: "projects", path: "projects", children: projectFiles },
   ...afterFiles.map((node) => ({ type: "file" as const, node })),
 ]
 
 // ─── helpers for the terminal's mini filesystem ──────────────────────────────
 
-// Directory listing for `ls`. "" / "." / "~" = root.
 export function listDir(path: string): string[] | null {
   const p = path.replace(/^\.?\/?/, "").replace(/\/$/, "")
   if (p === "" || p === "." || p === "~") {
@@ -234,7 +126,6 @@ export function listDir(path: string): string[] | null {
   return inDir.length ? inDir : null
 }
 
-// Resolve a user-typed path (relative to cwd) to a FileNode.
 export function resolveFile(arg: string, cwd: string): FileNode | null {
   let path = arg.trim().replace(/^\.\//, "")
   if (!path.includes("/") && cwd && cwd !== "~" && cwd !== "/") {

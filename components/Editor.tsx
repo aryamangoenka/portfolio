@@ -1,13 +1,44 @@
 "use client"
 
 import { ArrowUpRight } from "lucide-react"
-import { FILES } from "@/lib/files"
+import { FILES, type FileNode } from "@/lib/files"
 import { PROJECTS } from "@/lib/content"
-import { CodeBlock, Markdown } from "@/lib/highlight"
+import { Markdown } from "@/lib/highlight"
 import Hero from "./Hero"
+import { ExperienceView, StackView, AwardsView, AboutView, ContactView } from "./Views"
 
-function projectFor(id: string) {
-  return PROJECTS.find((p) => `projects/${p.slug}.md` === id)
+function ProjectView({ file }: { file: FileNode }) {
+  const p = PROJECTS.find((x) => x.slug === file.slug)
+  if (!p) return null
+  return (
+    <div className="doc">
+      <div className="chips">
+        {p.stack.map((s) => (
+          <span className="chip" key={s}>
+            {s}
+          </span>
+        ))}
+      </div>
+      <Markdown source={p.body} />
+      {p.link && (
+        <a className="project-link" href={p.link} target="_blank" rel="noreferrer">
+          {p.link.replace("https://", "")} <ArrowUpRight size={14} />
+        </a>
+      )}
+    </div>
+  )
+}
+
+function View({ file }: { file: FileNode }) {
+  switch (file.view) {
+    case "readme": return <Hero />
+    case "project": return <ProjectView file={file} />
+    case "experience": return <ExperienceView />
+    case "stack": return <StackView />
+    case "awards": return <AwardsView />
+    case "about": return <AboutView />
+    case "contact": return <ContactView />
+  }
 }
 
 export default function Editor() {
@@ -26,39 +57,12 @@ export default function Editor() {
             )}
             <b>{file.name}</b>
           </div>
-
           <div className="section">
-            {file.kind === "hero" && <Hero />}
-
-            {file.kind === "code" && <CodeBlock code={file.code!} lang={file.lang} />}
-
-            {file.kind === "markdown" &&
-              (() => {
-                const p = projectFor(file.id)
-                return (
-                  <>
-                    {p && (
-                      <div className="project-meta">
-                        {p.stack.map((s) => (
-                          <span className="chip" key={s}>
-                            {s}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                    <Markdown source={file.md!} />
-                    {p?.link && (
-                      <a className="project-link" href={p.link} target="_blank" rel="noreferrer">
-                        {p.link.replace("https://", "")} <ArrowUpRight size={14} />
-                      </a>
-                    )}
-                  </>
-                )
-              })()}
+            <View file={file} />
           </div>
         </div>
       ))}
-      <div style={{ height: "30vh" }} aria-hidden />
+      <div style={{ height: "28vh" }} aria-hidden />
     </>
   )
 }

@@ -9,7 +9,7 @@ type Entry =
   | { type: "out"; text: string; cls?: string }
 
 const WELCOME: Entry[] = [
-  { type: "out", text: "aryaman-goenka — interactive shell. © 2026", cls: "term-muted" },
+  { type: "out", text: "aryaman-goenka, interactive shell. © 2026", cls: "term-muted" },
   { type: "out", text: "type 'help' to explore, or 'sudo hire-me'. tab completes, ↑ recalls.", cls: "term-muted" },
   { type: "out", text: "" },
 ]
@@ -18,12 +18,10 @@ export default function Terminal({
   collapsed,
   onToggle,
   onOpenFile,
-  onSetTheme,
 }: {
   collapsed: boolean
   onToggle: () => void
   onOpenFile: (id: string) => void
-  onSetTheme: (mode: "dark" | "light" | "toggle") => void
 }) {
   const [entries, setEntries] = useState<Entry[]>(WELCOME)
   const [input, setInput] = useState("")
@@ -54,7 +52,6 @@ export default function Terminal({
 
     if (res.cwd !== undefined) setCwd(res.cwd)
     if (res.openFile) onOpenFile(res.openFile)
-    if (res.setTheme) onSetTheme(res.setTheme)
 
     if (value.trim()) setHist((prev) => [...prev, value])
     setHistIdx(null)

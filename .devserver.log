@@ -1,0 +1,19 @@
+
+> aryaman-goenka@1.0.0 dev
+> next dev
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ✓ Ready in 1191ms
+(node:84235) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ○ Compiling / ...
+ ✓ Compiled / in 2.2s (574 modules)
+ GET / 200 in 2296ms
+ GET / 200 in 29ms
+ GET / 200 in 19ms
+ GET / 200 in 17ms
+ GET / 200 in 27ms
+ GET / 200 in 34ms

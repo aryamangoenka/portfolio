@@ -28,17 +28,17 @@ function FileIcon({ icon }: { icon: string }) {
 function Row({
   node,
   active,
-  nested,
+  level,
   onOpen,
 }: {
   node: FileNode
   active: string
-  nested?: boolean
+  level: 1 | 2
   onOpen: (id: string) => void
 }) {
   return (
     <button
-      className={`tree-row${nested ? " nested" : ""}${active === node.id ? " active" : ""}`}
+      className={`tree-row l${level}${active === node.id ? " active" : ""}`}
       onClick={() => onOpen(node.id)}
       aria-current={active === node.id ? "true" : undefined}
     >
@@ -61,39 +61,31 @@ export default function Sidebar({
 
   return (
     <nav className={`sidebar${open ? " open" : ""}`} aria-label="Files">
-      <div className="sb-head">
-        <span>Explorer</span>
-      </div>
+      <div className="sb-head">explorer</div>
       <div className="sb-root">
         <FolderOpen size={14} className="fi" />
-        <span>aryaman/</span>
+        <span>aryaman</span>
       </div>
 
       <div className="tree">
-        {TREE.map((item, i) => {
+        {TREE.map((item) => {
           if (item.type === "file") {
-            return <Row key={item.node.id} node={item.node} active={active} nested onOpen={onOpen} />
+            return <Row key={item.node.id} node={item.node} active={active} level={1} onOpen={onOpen} />
           }
           return (
             <div key={item.path}>
               <button
-                className="tree-row nested tree-folder"
+                className="tree-row l1 tree-folder"
                 onClick={() => setFoldersOpen((v) => !v)}
                 aria-expanded={foldersOpen}
               >
                 {foldersOpen ? <ChevronDown size={13} className="fi" /> : <ChevronRight size={13} className="fi" />}
                 {foldersOpen ? <FolderOpen size={14} className="fi" /> : <Folder size={14} className="fi" />}
-                <span className="fname">{item.name}/</span>
+                <span className="fname">{item.name}</span>
               </button>
               {foldersOpen &&
                 item.children.map((child) => (
-                  <Row
-                    key={child.id}
-                    node={child}
-                    active={active}
-                    nested
-                    onOpen={onOpen}
-                  />
+                  <Row key={child.id} node={child} active={active} level={2} onOpen={onOpen} />
                 ))}
             </div>
           )
@@ -101,8 +93,7 @@ export default function Sidebar({
       </div>
 
       <div className="sb-hint">
-        <kbd>↑</kbd> click a file, or just scroll. <br />
-        try the <kbd>terminal</kbd> below — type <kbd>help</kbd>.
+        click a file, or scroll. the terminal below works. type <kbd>help</kbd>.
       </div>
     </nav>
   )
