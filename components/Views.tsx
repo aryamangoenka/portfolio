@@ -1,7 +1,7 @@
 "use client"
 
 import { ArrowUpRight } from "lucide-react"
-import { EXPERIENCE, INTERESTS, STANCE, PROFILE, LINKS } from "@/lib/content"
+import { EXPERIENCE, INTERESTS, STANCE, ABOUT_PS, PROFILE, LINKS } from "@/lib/content"
 
 function Comment({ children }: { children: React.ReactNode }) {
   return <p className="doc-comment">{"// "}{children}</p>
@@ -69,6 +69,7 @@ export function AboutView() {
           <li key={s}>{s}</li>
         ))}
       </ul>
+      <p className="about-ps">{ABOUT_PS}</p>
     </div>
   )
 }

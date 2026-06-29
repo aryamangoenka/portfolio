@@ -56,7 +56,7 @@ export const EXPERIENCE: Experience[] = [
     period: "Dec 2025 - 2026",
     notes: [
       "Workflow intelligence for engineering teams. Agents built from how teams actually work.",
-      "Ranked top 10% at YC. Accepted into Speedrun.",
+      "Top 10% at YC. Top 10 at Speedrun.",
     ],
     tags: ["agents", "product", "Speedrun"],
   },
@@ -226,3 +226,6 @@ export const STANCE = [
   "I put my whole heart into everything I build.",
   "I'd rather take a real swing at a huge problem than ship a 24-hour gimmick.",
 ]
+
+// a low-key aside at the bottom of the about page.
+export const ABOUT_PS = "ps. i'll be at YC Startup School. hmu :)"

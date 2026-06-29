@@ -4,7 +4,7 @@
 //  read from FILES, so everything stays in sync from one definition.
 // ─────────────────────────────────────────────────────────────────────────
 
-import { PROFILE, LINKS, EXPERIENCE, INTERESTS, STANCE, PROJECTS } from "./content"
+import { PROFILE, LINKS, EXPERIENCE, INTERESTS, STANCE, ABOUT_PS, PROJECTS } from "./content"
 
 export type FileView = "readme" | "project" | "experience" | "interests" | "about" | "contact"
 
@@ -43,7 +43,7 @@ const experienceText = () =>
 
 const interestsText = () => INTERESTS.map((i) => `- ${i.area} (${i.note})`).join("\n")
 
-const aboutText = () => STANCE.join("\n")
+const aboutText = () => STANCE.join("\n") + "\n\n" + ABOUT_PS
 
 const contactText = () =>
   [
