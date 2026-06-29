@@ -8,9 +8,9 @@ const mono = JetBrains_Mono({
   display: "swap",
 })
 
-const title = "Aryaman Goenka, Founder · Agentic AI"
+const title = "Aryaman Goenka, builder · agentic AI"
 const description =
-  "20-year-old founder building agentic AI. 1st of 1,000+ at HF0, agentic NLP at ASAPP (10K conversations at 95-100%), MIT Break Through Tech AI Fellow, published research. Building Assemblr at Founders, Inc."
+  "20-year-old builder pushing AI to the frontier. 1st at the HF0 AI hackathon (1 of 30 from 1,000+), agentic NLP at ASAPP (10K conversations at 95-100%), MIT Break Through Tech AI Fellow, LLM research accepted to ASN 2026."
 
 export const metadata: Metadata = {
   title,
@@ -18,12 +18,11 @@ export const metadata: Metadata = {
   authors: [{ name: "Aryaman Goenka" }],
   keywords: [
     "Aryaman Goenka",
+    "builder",
     "agentic AI",
-    "LLM engineer",
-    "founder",
-    "Assemblr",
-    "Founders Inc",
-    "UMass Amherst",
+    "LLM evals",
+    "AI engineer",
+    "machine learning",
   ],
   openGraph: {
     title,

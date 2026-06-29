@@ -5,37 +5,28 @@
 export const PROFILE = {
   name: "Aryaman Goenka",
   handle: "aryamangoenka",
-  role: "founder · agentic ai",
-  location: "San Francisco, CA",
-  school: "CS @ UMass Amherst '28",
+  role: "builder · agentic ai",
+  location: "San Francisco",
   age: 20,
   email: "aryamansgoenka@gmail.com",
-  blurb: "I build things people actually use.",
+  tagline: "I love pushing AI to the frontier.",
 }
 
 export const LINKS = {
   github: "https://github.com/aryamangoenka",
   linkedin: "https://www.linkedin.com/in/aryaman-goenka",
   x: "https://x.com/goenka_aryaman",
-  assemblr: "https://assemblr.net",
   email: "mailto:aryamansgoenka@gmail.com",
-}
-
-export const NOW = {
-  what: "Assemblr",
-  detail: "Workflow intelligence for engineering teams.",
-  context: "Founders, Inc. · Canopy F26 · San Francisco",
-  url: "https://assemblr.net",
 }
 
 // The proof. Short, true, each one stands on its own.
 export const BADGES: { icon: string; stat: string; label: string }[] = [
-  { icon: "trophy", stat: "1st / 1,000+", label: "won the HF0 AI hackathon in 12 hours" },
+  { icon: "trophy", stat: "1st place", label: "HF0 AI hackathon. 1 of 30 picked from 1,000+, built in 12h" },
   { icon: "bot", stat: "10K @ 95-100%", label: "agentic NLP shipped at ASAPP" },
   { icon: "graduation-cap", stat: "MIT fellow", label: "Break Through Tech AI" },
-  { icon: "file-text", stat: "published", label: "LLM research, NUTRITION 2026" },
+  { icon: "file-text", stat: "published", label: "LLM reliability research, ASN 2026" },
   { icon: "users", stat: "500+ taught", label: "NeuroBlock, neural nets for high schoolers" },
-  { icon: "landmark", stat: "president", label: "CICSoft, biggest tech org at UMass" },
+  { icon: "landmark", stat: "president", label: "CICSoft, biggest tech org on campus" },
 ]
 
 export type Experience = {
@@ -51,23 +42,23 @@ export const EXPERIENCE: Experience[] = [
   {
     org: "Founders, Inc.",
     role: "Founder, Canopy",
-    period: "Mar 2026 - now",
+    period: "Mar - Jun 2026",
     location: "San Francisco",
     notes: [
-      "Got into Canopy, the Founders, Inc. founder program, to build Assemblr.",
+      "Selected for Canopy, the Founders, Inc. founder program.",
       "Hubert Thieblot brought me on to build on-site in SF.",
     ],
-    tags: ["founder", "0→1", "SF"],
+    tags: ["Canopy", "0→1", "SF"],
   },
   {
     org: "Assemblr",
     role: "Co-Founder",
-    period: "Dec 2025 - now",
+    period: "Dec 2025 - 2026",
     notes: [
       "Workflow intelligence for engineering teams. Agents built from how teams actually work.",
-      "Top 10% at YC Startup School.",
+      "Ranked top 10% at YC. Accepted into Speedrun.",
     ],
-    tags: ["agents", "product", "YC"],
+    tags: ["agents", "product", "Speedrun"],
   },
   {
     org: "ASAPP",
@@ -95,7 +86,7 @@ export const EXPERIENCE: Experience[] = [
     tags: ["quant", "fellowship"],
   },
   {
-    org: "UMass, Advanced Learning Tech Lab",
+    org: "Advanced Learning Tech Lab",
     role: "Undergraduate Intern",
     period: "Feb 2025 - Jan 2026",
     notes: [
@@ -105,12 +96,12 @@ export const EXPERIENCE: Experience[] = [
     tags: ["multi-agent", "Hugging Face", "research"],
   },
   {
-    org: "UMass, ML for Education Lab",
+    org: "ML for Education Lab",
     role: "Research Assistant",
     period: "Sep 2024 - Apr 2025",
     notes: [
       "Tested GPT-4.5, Gemini 2.5, Claude 3.7, and DeepSeek-R1 against clinical dietary guidelines for accuracy and bias.",
-      "Co-authored a paper accepted to NUTRITION 2026.",
+      "Co-authored a paper accepted to ASN 2026.",
     ],
     tags: ["LLM eval", "research", "published"],
   },
@@ -137,11 +128,11 @@ export const EXPERIENCE: Experience[] = [
     tags: ["React", "scale", "dashboards"],
   },
   {
-    org: "CICSoft @ UMass",
+    org: "CICSoft",
     role: "President",
     period: "Feb 2025 - Feb 2026",
     notes: [
-      "Ran the biggest tech org at UMass.",
+      "Ran the biggest tech org on campus.",
       "Spent most of it helping people get into rooms they didn't think they belonged in.",
     ],
     tags: ["leadership", "community"],
@@ -167,8 +158,9 @@ export const PROJECTS: Project[] = [
     stack: ["NomadicML Vision", "real-time CV", "Python", "12-hour build"],
     body: `# ColdBrew
 
-🥇 1st place, HF0 Voice & Video AI Hackathon. 30 builders picked from 1,000+.
-I almost skipped it because I couldn't afford the trip. I went anyway.
+🥇 1st place, HF0 Voice & Video AI Hackathon. 1 of 30 builders, picked from
+1,000+ applicants. I almost skipped it because I couldn't afford the trip. I
+went anyway.
 
 Thursday 9PM I got in. Friday I flew across the country. Saturday my team won.
 
@@ -215,73 +207,22 @@ runs stream live over WebSockets, so you watch the model learn.
 Most ML lessons open with math that scares people off. This one opens with a
 block you drag.`,
   },
-  {
-    slug: "assemblr",
-    title: "Assemblr",
-    year: "2025 - now",
-    one_liner: "Workflow intelligence for engineering teams. What I'm building now.",
-    stack: ["agents", "full-stack", "Founders, Inc.", "YC top 10%"],
-    link: "https://assemblr.net",
-    body: `# Assemblr
-
-What I'm building now. Workflow intelligence for engineering teams: agents built
-from how your team actually works.
-
-Early, on-site at Founders, Inc. in SF through the Canopy program. Top 10% at YC
-Startup School. Hubert Thieblot brought me on to build it.
-
-→ [assemblr.net](https://assemblr.net)`,
-  },
-  {
-    slug: "research",
-    title: "AI vs. humans on dietary advice",
-    year: "2025 - 2026",
-    one_liner: "Benchmarking frontier LLMs against clinical guidelines.",
-    stack: ["LLM eval", "research", "Python"],
-    body: `# AI vs. humans on dietary advice
-
-Research at the UMass ML for Education Lab, using colorectal cancer prevention
-as the test case.
-
-- Benchmarked GPT-4.5, Gemini 2.5, Claude 3.7, and DeepSeek-R1 against the
-  WCRF/AICR clinical guidelines
-- Compared model answers to real human answers across age groups, for accuracy
-  and bias
-- Accepted to NUTRITION 2026 (American Society for Nutrition)
-
-Most of my work is agents and tooling, so this was a stretch. The methods
-carried over.`,
-  },
 ]
 
-export type StackGroup = { label: string; items: string[] }
+export type Interest = { area: string; note: string }
 
-export const STACK: StackGroup[] = [
-  { label: "agents", items: ["LangGraph", "multi-agent", "tool use", "structured prompting", "RAG"] },
-  { label: "llms", items: ["GPT-4.5", "Gemini 2.5", "Claude 3.7", "DeepSeek-R1", "evals"] },
-  { label: "ml", items: ["TensorFlow", "scikit-learn", "PCA", "KMeans", "KNN"] },
-  { label: "frontend", items: ["React", "Next.js 15", "TypeScript", "Tailwind"] },
-  { label: "backend", items: ["Python", "Django REST", "FastAPI", "Node", "JWT", "Pytest"] },
-  { label: "data", items: ["Pandas", "NumPy", "Hugging Face", "WebSockets", "Git"] },
+export const INTERESTS: Interest[] = [
+  { area: "LLM evals & reliability", note: "what models actually get right, measured" },
+  { area: "agentic systems", note: "multi-agent pipelines that do real work" },
+  { area: "frontier models & reasoning", note: "the edge, before it becomes a trend" },
+  { area: "on-device / edge ML", note: "intelligence where the compute isn't" },
+  { area: "applied AI research", note: "papers that turn into products" },
 ]
 
-export const AWARDS: { award: string; detail: string; year: string }[] = [
-  { award: "1st, HF0 Voice & Video AI Hackathon", detail: "1 of 30 from 1,000+ · Knowtex, NomadicML", year: "2026" },
-  { award: "Founder, Founders, Inc. Canopy (F26)", detail: "building Assemblr on-site in SF", year: "2026" },
-  { award: "MIT Break Through Tech AI Fellow", detail: "fully-funded AI/ML program", year: "2025" },
-  { award: "SIG Discovery Day Fellow", detail: "Susquehanna International Group", year: "2025" },
-  { award: "Paper accepted, NUTRITION 2026", detail: "American Society for Nutrition", year: "2026" },
-  { award: "1st, UMass Spring Classic (U1200)", detail: "chess", year: "2025" },
-  { award: "School topper", detail: "", year: "2023" },
+// about.ts — what I'm actually about. No filler.
+export const STANCE = [
+  "I don't chase trends. I'd rather be early to the thing that becomes one.",
+  "I love the engineering. I love the customer more. ❤",
+  "I put my whole heart into everything I build.",
+  "I'd rather take a real swing at a huge problem than ship a 24-hour gimmick.",
 ]
-
-export const CREDO = [
-  "build over talk",
-  "ship the rough v1",
-  "learn from real users",
-  "do the work in public",
-  "pull people up with you",
-]
-
-export const ABOUT_BIO =
-  "20, CS at UMass ('28). Most of what I know came from shipping, not class. I care less about how something sounds and more about whether it works for the person using it."

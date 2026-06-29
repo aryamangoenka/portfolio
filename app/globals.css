@@ -520,93 +520,56 @@ body {
 }
 
 /* ───────────────────────────────────────────────────────────────────────────
-   STACK
+   INTERESTS
 ─────────────────────────────────────────────────────────────────────────── */
-.stk {
-  display: flex;
-  flex-direction: column;
-}
-.stk-row {
-  display: flex;
-  gap: 16px;
-  padding: 13px 0;
-  border-top: 1px solid var(--rule);
-}
-.stk-row:last-child {
-  border-bottom: 1px solid var(--rule);
-}
-.stk-label {
-  flex: none;
-  width: 92px;
-  color: var(--accent);
-  font-size: 13px;
-}
-
-/* ───────────────────────────────────────────────────────────────────────────
-   AWARDS
-─────────────────────────────────────────────────────────────────────────── */
-.awd {
+.intr {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-.awd-row {
+.intr-row {
   display: flex;
+  align-items: baseline;
   gap: 18px;
   padding: 13px 0;
   border-top: 1px solid var(--rule);
 }
-.awd-row:last-child {
+.intr-row:last-child {
   border-bottom: 1px solid var(--rule);
 }
-.awd-year {
+.intr-area {
   flex: none;
-  width: 46px;
-  color: var(--muted);
-  font-size: 13px;
-  padding-top: 1px;
-}
-.awd-main {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-.awd-name {
+  width: 240px;
   color: var(--ink);
   font-size: 14px;
 }
-.awd-detail {
+.intr-note {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13px;
 }
 
 /* ───────────────────────────────────────────────────────────────────────────
-   ABOUT
+   ABOUT / stance
 ─────────────────────────────────────────────────────────────────────────── */
-.credo {
+.stance {
   list-style: none;
-  margin: 0 0 24px;
+  margin: 0;
   padding: 0;
+  max-width: 62ch;
 }
-.credo li {
+.stance li {
   position: relative;
-  padding-left: 22px;
-  margin-bottom: 9px;
+  padding-left: 24px;
+  margin-bottom: 16px;
   font-size: 15px;
+  line-height: 1.55;
   color: var(--ink);
 }
-.credo li::before {
+.stance li::before {
   content: "→";
   position: absolute;
   left: 0;
   color: var(--accent);
-}
-.about-bio {
-  max-width: 62ch;
-  font-size: 14px;
-  line-height: 1.7;
-  color: var(--ink-2);
-  margin: 0;
 }
 
 /* ───────────────────────────────────────────────────────────────────────────
@@ -883,9 +846,12 @@ body {
     flex-direction: column;
     gap: 1px;
   }
-  .stk-row {
+  .intr-row {
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
+  }
+  .intr-area {
+    width: auto;
   }
 }
 

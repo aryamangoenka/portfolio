@@ -4,25 +4,18 @@
 //  read from FILES, so everything stays in sync from one definition.
 // ─────────────────────────────────────────────────────────────────────────
 
-import { PROFILE, LINKS, EXPERIENCE, STACK, AWARDS, CREDO, ABOUT_BIO, PROJECTS } from "./content"
+import { PROFILE, LINKS, EXPERIENCE, INTERESTS, STANCE, PROJECTS } from "./content"
 
-export type FileView =
-  | "readme"
-  | "project"
-  | "experience"
-  | "stack"
-  | "awards"
-  | "about"
-  | "contact"
+export type FileView = "readme" | "project" | "experience" | "interests" | "about" | "contact"
 
 export type FileNode = {
-  id: string // full path, e.g. "projects/coldbrew.md"
+  id: string
   name: string
   dir: string | null
   lang: string
   view: FileView
   icon: string
-  slug?: string // for projects
+  slug?: string
   text: string // plaintext for `cat`
 }
 
@@ -31,31 +24,26 @@ export type FileNode = {
 const readmeText = () =>
   [
     PROFILE.name,
-    `${PROFILE.role} · ${PROFILE.location}`,
+    PROFILE.role,
     "",
-    PROFILE.blurb,
+    PROFILE.tagline,
     "",
-    "1st / 1,000+   HF0 AI hackathon, won in 12h",
-    "10K @ 95-100%  agentic NLP at ASAPP",
-    "MIT fellow     Break Through Tech AI",
-    "published      LLM research, NUTRITION 2026",
-    "500+ taught    NeuroBlock",
-    "president      CICSoft, biggest tech org at UMass",
+    "1st place     HF0 AI hackathon (1 of 30 from 1,000+)",
+    "10K @ 95-100% agentic NLP at ASAPP",
+    "MIT fellow    Break Through Tech AI",
+    "published     LLM research, ASN 2026",
+    "500+ taught   NeuroBlock",
+    "president     CICSoft, biggest tech org on campus",
     "",
-    "now: building Assemblr at Founders, Inc. (SF).",
     "tip: type 'help', or 'open projects/coldbrew.md'.",
   ].join("\n")
 
 const experienceText = () =>
   EXPERIENCE.map((e) => `${e.period}  ${e.role}, ${e.org}\n${e.notes.map((n) => "  - " + n).join("\n")}`).join("\n\n")
 
-const stackText = () =>
-  STACK.map((g) => `${g.label.padEnd(10)} ${g.items.join(", ")}`).join("\n")
+const interestsText = () => INTERESTS.map((i) => `- ${i.area} (${i.note})`).join("\n")
 
-const awardsText = () =>
-  AWARDS.map((a) => `${a.year}  ${a.award}${a.detail ? "  (" + a.detail + ")" : ""}`).join("\n")
-
-const aboutText = () => [...CREDO.map((c) => "- " + c), "", ABOUT_BIO].join("\n")
+const aboutText = () => STANCE.join("\n")
 
 const contactText = () =>
   [
@@ -63,7 +51,6 @@ const contactText = () =>
     LINKS.github.replace("https://", ""),
     LINKS.linkedin.replace("https://www.", ""),
     LINKS.x.replace("https://", ""),
-    LINKS.assemblr.replace("https://", ""),
   ].join("\n")
 
 // ─── the filesystem ──────────────────────────────────────────────────────────
@@ -91,13 +78,12 @@ const projectFiles: FileNode[] = PROJECTS.map((p) => ({
 
 const afterFiles: FileNode[] = [
   { id: "experience.ts", name: "experience.ts", dir: null, lang: "ts", view: "experience", icon: "ts", text: experienceText() },
-  { id: "stack.ts", name: "stack.ts", dir: null, lang: "ts", view: "stack", icon: "ts", text: stackText() },
-  { id: "awards.json", name: "awards.json", dir: null, lang: "json", view: "awards", icon: "json", text: awardsText() },
+  { id: "interests.ts", name: "interests.ts", dir: null, lang: "ts", view: "interests", icon: "ts", text: interestsText() },
   { id: "about.ts", name: "about.ts", dir: null, lang: "ts", view: "about", icon: "ts", text: aboutText() },
   { id: "contact.sh", name: "contact.sh", dir: null, lang: "bash", view: "contact", icon: "sh", text: contactText() },
 ]
 
-// Scroll / narrative order: hook → work → record → skills → honors → self → reach
+// Scroll / narrative order: hook → work → record → interests → self → reach
 export const FILES: FileNode[] = [readmeFile, ...projectFiles, ...afterFiles]
 
 export const getFile = (id: string) => FILES.find((f) => f.id === id)

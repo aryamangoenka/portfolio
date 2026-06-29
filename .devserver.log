@@ -6,14 +6,12 @@
   - Local:        http://localhost:3000
 
  ✓ Starting...
- ✓ Ready in 1191ms
-(node:84235) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+ ✓ Ready in 1313ms
+(node:94275) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
 (Use `node --trace-deprecation ...` to show where the warning was created)
  ○ Compiling / ...
- ✓ Compiled / in 2.2s (574 modules)
- GET / 200 in 2296ms
- GET / 200 in 29ms
- GET / 200 in 19ms
- GET / 200 in 17ms
- GET / 200 in 27ms
- GET / 200 in 34ms
+ ✓ Compiled / in 2.5s (574 modules)
+ GET / 200 in 2619ms
+ GET / 200 in 16ms
+ ✓ Compiled in 181ms (565 modules)
+ GET / 200 in 62ms

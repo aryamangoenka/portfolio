@@ -5,7 +5,7 @@ import { FILES, type FileNode } from "@/lib/files"
 import { PROJECTS } from "@/lib/content"
 import { Markdown } from "@/lib/highlight"
 import Hero from "./Hero"
-import { ExperienceView, StackView, AwardsView, AboutView, ContactView } from "./Views"
+import { ExperienceView, InterestsView, AboutView, ContactView } from "./Views"
 
 function ProjectView({ file }: { file: FileNode }) {
   const p = PROJECTS.find((x) => x.slug === file.slug)
@@ -34,8 +34,7 @@ function View({ file }: { file: FileNode }) {
     case "readme": return <Hero />
     case "project": return <ProjectView file={file} />
     case "experience": return <ExperienceView />
-    case "stack": return <StackView />
-    case "awards": return <AwardsView />
+    case "interests": return <InterestsView />
     case "about": return <AboutView />
     case "contact": return <ContactView />
   }

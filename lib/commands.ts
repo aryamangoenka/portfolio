@@ -3,7 +3,7 @@
 //  Pure: run(input, cwd) → result. The Terminal component applies effects.
 // ─────────────────────────────────────────────────────────────────────────
 
-import { PROFILE, LINKS, EXPERIENCE, STACK, AWARDS } from "./content"
+import { PROFILE, LINKS, EXPERIENCE, INTERESTS } from "./content"
 import { FILES, DIRS, listDir, resolveFile, getFile } from "./files"
 
 export type TermLine = { text: string; cls?: string }
@@ -20,8 +20,8 @@ const ok = (lines: TermLine[], extra: Partial<TermResult> = {}): TermResult => (
 
 export const COMMANDS = [
   "help", "ls", "cd", "pwd", "cat", "open", "whoami", "about", "projects",
-  "experience", "stack", "skills", "awards", "contact", "socials", "neofetch",
-  "git", "theme", "date", "echo", "clear", "sudo", "repo", "vim", "exit",
+  "experience", "interests", "contact", "socials", "neofetch",
+  "git", "date", "echo", "clear", "sudo", "repo", "vim", "exit",
 ]
 
 function help(): TermResult {
@@ -31,10 +31,9 @@ function help(): TermResult {
     P("  ls [dir]        list files          cat <file>     print a file"),
     P("  cd <dir>        change directory    open <file>    jump to a section"),
     P("  projects        my work             experience     where I've been"),
-    P("  stack           what I use          awards         receipts"),
-    P("  whoami          the short version   contact        reach me"),
-    P("  neofetch        the stat card       git log        career as commits"),
-    P("  clear           clear the screen"),
+    P("  interests       what I'm into       contact        reach me"),
+    P("  whoami          the short version   git log        career as commits"),
+    P("  neofetch        the stat card       clear          clear the screen"),
     P(""),
     P("  ↑/↓ history · tab to autocomplete · try 'sudo hire-me'", "term-muted"),
   ])
@@ -78,8 +77,8 @@ function openCmd(arg: string, cwd: string): TermResult {
 function whoami(): TermResult {
   return ok([
     P(PROFILE.name, "term-accent"),
-    P(`${PROFILE.role} · ${PROFILE.location} · ${PROFILE.school}`),
-    P(PROFILE.blurb, "term-muted"),
+    P(PROFILE.role),
+    P(PROFILE.tagline, "term-muted"),
   ])
 }
 
@@ -99,17 +98,10 @@ function experience(): TermResult {
   return ok([P("Where I've been:", "term-muted"), ...lines])
 }
 
-function stack(): TermResult {
-  const lines = STACK.map((g) =>
-    P(`  ${g.label.padEnd(12)} ${g.items.join(", ")}`)
-  )
-  return ok([P("My stack:", "term-muted"), ...lines])
-}
-
-function awards(): TermResult {
+function interests(): TermResult {
   return ok([
-    P("Honors:", "term-muted"),
-    ...AWARDS.map((a) => P(`  ${a.year}  ${a.award}`, "term-accent")),
+    P("what I'm into:", "term-muted"),
+    ...INTERESTS.map((i) => P(`  ${i.area}`, "term-accent")),
   ])
 }
 
@@ -120,7 +112,6 @@ function contact(): TermResult {
     P(`  github    ${LINKS.github.replace("https://", "")}`, "term-link"),
     P(`  linkedin  ${LINKS.linkedin.replace("https://www.", "")}`, "term-link"),
     P(`  x         ${LINKS.x.replace("https://", "")}`, "term-link"),
-    P(`  assemblr  ${LINKS.assemblr.replace("https://", "")}`, "term-link"),
   ])
 }
 
@@ -154,13 +145,12 @@ function neofetch(): TermResult {
     `${PROFILE.name}`,
     `─────────────────────`,
     `role     ${PROFILE.role}`,
-    `os       ships@v1`,
-    `uptime   ${PROFILE.age} years`,
-    `host     ${PROFILE.location}`,
-    `edu      ${PROFILE.school}`,
-    `now      building Assemblr`,
-    `wins     HF0 1st/1,000+`,
+    `focus    LLM evals · agents · the edge`,
+    `shipped  agentic NLP @ ASAPP, NeuroBlock`,
+    `wins     HF0 hackathon, MIT fellow`,
+    `research ASN 2026`,
     `taught   500+ students`,
+    `status   building something ambitious`,
   ]
   const lines: TermLine[] = []
   const rows = Math.max(art.length, info.length)
@@ -177,8 +167,8 @@ function sudo(rest: string): TermResult {
   if (r === "hire-me" || r === "hire me") {
     return ok([
       P("Permission granted. ✓", "term-success"),
-      P(`Reach the founder directly: ${PROFILE.email}`, "term-link"),
-      P("(he replies fastest to short, specific notes.)", "term-muted"),
+      P(`Reach me directly: ${PROFILE.email}`, "term-link"),
+      P("(I reply fastest to short, specific notes.)", "term-muted"),
     ])
   }
   if (r.startsWith("rm")) {
@@ -204,8 +194,7 @@ export function run(input: string, cwd: string): TermResult {
     case "about": return openCmd("about.ts", cwd)
     case "projects": return projects()
     case "experience": case "work": case "history": return experience()
-    case "stack": case "skills": case "tech": return stack()
-    case "awards": case "honors": return awards()
+    case "interests": case "stack": case "skills": return interests()
     case "contact": case "email": case "reach": return contact()
     case "socials": case "links": return contact()
     case "neofetch": case "fetch": return neofetch()

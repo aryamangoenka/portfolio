@@ -1,16 +1,7 @@
 "use client"
 
-import {
-  Trophy,
-  Bot,
-  GraduationCap,
-  FileText,
-  Users,
-  Landmark,
-  Zap,
-  ArrowUpRight,
-} from "lucide-react"
-import { PROFILE, LINKS, NOW, BADGES } from "@/lib/content"
+import { Trophy, Bot, GraduationCap, FileText, Users, Landmark, Zap } from "lucide-react"
+import { BADGES } from "@/lib/content"
 
 function BadgeIcon({ icon }: { icon: string }) {
   const p = { size: 16, className: "pi" }
@@ -29,22 +20,20 @@ export default function Hero() {
   return (
     <div className="hero">
       <div className="eyebrow">
-        <span className="dot" /> founders, inc · f26 · san francisco
+        <span className="dot" /> builder · agentic ai · san francisco
       </div>
 
       <h1 className="hero-h1">
-        I build agents
+        I love pushing AI
         <br />
-        that <span className="accent">ship</span>.
+        to the <span className="accent">frontier</span>.
       </h1>
 
       <p className="hero-lede">
-        I&apos;m 20, building{" "}
-        <a href={LINKS.assemblr} target="_blank" rel="noreferrer">
-          Assemblr
-        </a>{" "}
-        at Founders, Inc. Before this: agentic NLP at ASAPP, a neural-net tool
-        500+ students learned on, and LLM research headed to NUTRITION 2026.
+        I&apos;m 20, building at the edge of AI: agentic systems, LLM evals, and
+        applied research. Before this, I shipped agentic NLP at ASAPP, built a
+        neural-net tool 500+ students learned on, and co-authored LLM research
+        headed to ASN 2026.
       </p>
 
       <div className="proof">
@@ -55,24 +44,6 @@ export default function Hero() {
             <span className="plabel">{b.label}</span>
           </div>
         ))}
-      </div>
-
-      <div className="now">
-        <div className="grow">
-          <span className="tag">
-            <span className="dot" /> building now
-          </span>
-          <div className="now-what">{NOW.what}</div>
-          <p className="now-detail">{NOW.detail}</p>
-          <p className="now-ctx">{NOW.context}</p>
-        </div>
-        <a className="btn" href={NOW.url} target="_blank" rel="noreferrer">
-          assemblr.net <ArrowUpRight size={14} />
-        </a>
-      </div>
-
-      <div className="logos">
-        founders, inc · asapp · mit · sig · umass · hf0
       </div>
     </div>
   )

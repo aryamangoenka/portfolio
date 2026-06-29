@@ -1,7 +1,7 @@
 "use client"
 
 import { ArrowUpRight } from "lucide-react"
-import { EXPERIENCE, STACK, AWARDS, CREDO, ABOUT_BIO, PROFILE, LINKS } from "@/lib/content"
+import { EXPERIENCE, INTERESTS, STANCE, PROFILE, LINKS } from "@/lib/content"
 
 function Comment({ children }: { children: React.ReactNode }) {
   return <p className="doc-comment">{"// "}{children}</p>
@@ -44,40 +44,15 @@ export function ExperienceView() {
   )
 }
 
-export function StackView() {
+export function InterestsView() {
   return (
     <div className="doc">
-      <Comment>what I reach for</Comment>
-      <div className="stk">
-        {STACK.map((g) => (
-          <div className="stk-row" key={g.label}>
-            <span className="stk-label">{g.label}</span>
-            <div className="chips">
-              {g.items.map((it) => (
-                <span className="chip" key={it}>
-                  {it}
-                </span>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-export function AwardsView() {
-  return (
-    <div className="doc">
-      <Comment>receipts</Comment>
-      <ul className="awd">
-        {AWARDS.map((a) => (
-          <li className="awd-row" key={a.award}>
-            <span className="awd-year">{a.year}</span>
-            <div className="awd-main">
-              <span className="awd-name">{a.award}</span>
-              {a.detail && <span className="awd-detail">{a.detail}</span>}
-            </div>
+      <Comment>what I&apos;m into right now</Comment>
+      <ul className="intr">
+        {INTERESTS.map((i) => (
+          <li className="intr-row" key={i.area}>
+            <span className="intr-area">{i.area}</span>
+            <span className="intr-note">{i.note}</span>
           </li>
         ))}
       </ul>
@@ -88,13 +63,12 @@ export function AwardsView() {
 export function AboutView() {
   return (
     <div className="doc">
-      <Comment>the short version</Comment>
-      <ul className="credo">
-        {CREDO.map((c) => (
-          <li key={c}>{c}</li>
+      <Comment>what I&apos;m about</Comment>
+      <ul className="stance">
+        {STANCE.map((s) => (
+          <li key={s}>{s}</li>
         ))}
       </ul>
-      <p className="about-bio">{ABOUT_BIO}</p>
     </div>
   )
 }
@@ -105,7 +79,6 @@ export function ContactView() {
     { key: "github", label: LINKS.github.replace("https://", ""), href: LINKS.github, ext: true },
     { key: "linkedin", label: LINKS.linkedin.replace("https://www.", ""), href: LINKS.linkedin, ext: true },
     { key: "x", label: LINKS.x.replace("https://", ""), href: LINKS.x, ext: true },
-    { key: "assemblr", label: LINKS.assemblr.replace("https://", ""), href: LINKS.assemblr, ext: true },
   ]
   return (
     <div className="doc">

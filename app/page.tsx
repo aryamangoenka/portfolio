@@ -5,7 +5,7 @@ import { Menu } from "lucide-react"
 import Sidebar from "@/components/Sidebar"
 import Editor from "@/components/Editor"
 import Terminal from "@/components/Terminal"
-import { FILES, getFile } from "@/lib/files"
+import { FILES } from "@/lib/files"
 
 export default function Page() {
   const [active, setActive] = useState<string>(FILES[0].id)
@@ -61,25 +61,12 @@ export default function Page() {
     setSidebarOpen(false)
   }, [])
 
-  const activeNode = getFile(active)
-
   return (
     <div className="app">
       <header className="titlebar">
         <button className="icon-btn menu-btn" onClick={() => setSidebarOpen((v) => !v)} aria-label="Toggle files">
           <Menu size={16} />
         </button>
-        <div className="file-crumb">
-          aryaman
-          <span className="crumb-sep">/</span>
-          {activeNode?.dir && (
-            <>
-              {activeNode.dir}
-              <span className="crumb-sep">/</span>
-            </>
-          )}
-          <b>{activeNode?.name}</b>
-        </div>
         <span className="spacer" />
         <span className="clock">SF {clock || "--:--"}</span>
       </header>
