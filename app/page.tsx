@@ -1,91 +1,147 @@
-"use client"
+import type { ComponentType } from "react"
+import { EMAIL, EXPERIENCE, FLIGHT, GITHUB, HEADLINE, INTRO, LINKEDIN, PROJECTS, type Project, type ProjectId } from "@/lib/content"
+import { AssemblrMiner } from "@/components/toys/AssemblrMiner"
+import { ColdBrewCamera } from "@/components/toys/ColdBrewCamera"
+import { EmberCity } from "@/components/toys/EmberCity"
+import { NeuroBlockNet } from "@/components/toys/NeuroBlockNet"
+import { Portrait } from "@/components/toys/Portrait"
+import { SentientDots } from "@/components/toys/SentientDots"
+import { TraceAssertSlip } from "@/components/toys/TraceAssertSlip"
 
-import { useCallback, useEffect, useRef, useState } from "react"
-import { Menu } from "lucide-react"
-import Sidebar from "@/components/Sidebar"
-import Editor from "@/components/Editor"
-import Terminal from "@/components/Terminal"
-import { FILES } from "@/lib/files"
+const TOYS: Record<ProjectId, ComponentType> = {
+  ember: EmberCity,
+  assemblr: AssemblrMiner,
+  sentient: SentientDots,
+  traceassert: TraceAssertSlip,
+  coldbrew: ColdBrewCamera,
+  neuroblock: NeuroBlockNet,
+}
+
+function ProjectSection({ project }: { project: Project }) {
+  const Toy = TOYS[project.id]
+  return (
+    <section className="proj" id={project.id}>
+      <div className="copy">
+        <h2>{project.name}</h2>
+        <div className="meta">
+          {project.meta}
+          {project.links?.map((link, i) => (
+            <span key={link.href}>
+              {project.meta || i > 0 ? " · " : ""}
+              <a href={link.href}>{link.label}</a>
+            </span>
+          ))}
+        </div>
+        {project.paragraphs.map((p) => (
+          <p key={p}>{p}</p>
+        ))}
+        {project.proof && <p className="proof">{project.proof}</p>}
+      </div>
+      <div>
+        <Toy />
+        <p className="cap">{project.caption}</p>
+      </div>
+    </section>
+  )
+}
 
 export default function Page() {
-  const [active, setActive] = useState<string>(FILES[0].id)
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [termCollapsed, setTermCollapsed] = useState(false)
-  const [clock, setClock] = useState("")
-
-  const scrollRef = useRef<HTMLDivElement>(null)
-  const intersecting = useRef<Set<string>>(new Set())
-
-  // SF clock
-  useEffect(() => {
-    const tick = () => {
-      setClock(
-        new Intl.DateTimeFormat("en-US", {
-          timeZone: "America/Los_Angeles",
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: false,
-        }).format(new Date())
-      )
-    }
-    tick()
-    const id = setInterval(tick, 30_000)
-    return () => clearInterval(id)
-  }, [])
-
-  // scroll-spy → active file
-  useEffect(() => {
-    const root = scrollRef.current
-    if (!root) return
-    const els = Array.from(root.querySelectorAll<HTMLElement>("[data-section]"))
-    const order = FILES.map((f) => f.id)
-    const obs = new IntersectionObserver(
-      (records) => {
-        records.forEach((r) => {
-          const id = (r.target as HTMLElement).dataset.section!
-          if (r.isIntersecting) intersecting.current.add(id)
-          else intersecting.current.delete(id)
-        })
-        const top = order.find((id) => intersecting.current.has(id))
-        if (top) setActive(top)
-      },
-      { root, rootMargin: "-6% 0px -85% 0px", threshold: 0 }
-    )
-    els.forEach((el) => obs.observe(el))
-    return () => obs.disconnect()
-  }, [])
-
-  const goToFile = useCallback((id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" })
-    setActive(id)
-    setSidebarOpen(false)
-  }, [])
-
   return (
-    <div className="app">
-      <header className="titlebar">
-        <button className="icon-btn menu-btn" onClick={() => setSidebarOpen((v) => !v)} aria-label="Toggle files">
-          <Menu size={16} />
-        </button>
-        <span className="spacer" />
-        <span className="clock">SF {clock || "--:--"}</span>
+    <>
+      <nav>
+        <div className="wrap">
+          <b>
+            <a href="#top">Aryaman Goenka</a>
+          </b>
+          <div>
+            <a href="#work">Work</a>
+            <a href="#experience">Experience</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </div>
+      </nav>
+
+      <header id="top" className="wrap">
+        <div className="hero">
+          <div className="intro">
+            <h1>
+              {HEADLINE.plain}
+              <em>{HEADLINE.accent}</em>
+            </h1>
+            <p className="lede">{INTRO}</p>
+            <div className="btns">
+              <a className="btn solid" href="#work">
+                See the work
+              </a>
+              <a className="btn" href={`mailto:${EMAIL}`}>
+                Email me
+              </a>
+              <a className="btn" href={LINKEDIN}>
+                LinkedIn
+              </a>
+            </div>
+          </div>
+          <Portrait />
+        </div>
+        <ul className="index" id="work">
+          {PROJECTS.map((p) => (
+            <li key={p.id}>
+              <a
+                href={`#${p.id}`}
+                style={{ "--c": p.list.color, "--on": p.list.onColor ?? "#111" } as React.CSSProperties}
+              >
+                <b>{p.name}</b>
+                <span>{p.list.what}</span>
+                <span>{p.list.result}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </header>
 
-      <div className="workbench">
-        <Sidebar active={active} open={sidebarOpen} onOpen={goToFile} />
-        <div className={`scrim${sidebarOpen ? " show" : ""}`} onClick={() => setSidebarOpen(false)} />
+      <main className="wrap">
+        {PROJECTS.map((p) => (
+          <ProjectSection key={p.id} project={p} />
+        ))}
 
-        <div className="main">
-          <div className="editor-scroll" ref={scrollRef}>
-            <Editor />
+        <section id="experience">
+          <h2>Experience</h2>
+          <div className="xp">
+            {EXPERIENCE.map((e) => (
+              <div key={e.org}>
+                <b>{e.org}</b>
+                <span>{e.role}</span>
+                <p>{e.text}</p>
+              </div>
+            ))}
           </div>
-          <Terminal
-            collapsed={termCollapsed}
-            onToggle={() => setTermCollapsed((v) => !v)}
-            onOpenFile={goToFile}
-          />
+        </section>
+
+        <section id="about">
+          <div className="story">
+            <h2>The flight</h2>
+            <div>
+              {FLIGHT.map((p) => (
+                <p key={p}>{p}</p>
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer id="contact">
+        <div className="wrap">
+          <h2>Say hi.</h2>
+          <a className="mail" href={`mailto:${EMAIL}`}>
+            {EMAIL}
+          </a>
+          <div className="links">
+            <a href={GITHUB}>GitHub</a>
+            <a href={LINKEDIN}>LinkedIn</a>
+          </div>
         </div>
-      </div>
-    </div>
+      </footer>
+    </>
   )
 }

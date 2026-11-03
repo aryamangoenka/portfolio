@@ -26,3 +26,9 @@ next-env.d.ts
 # misc
 .DS_Store
 .gstack/
+
+# local only
+.devserver.log
+.claude/launch.json
+# prototypes include the original photo; never commit it
+prototypes/
